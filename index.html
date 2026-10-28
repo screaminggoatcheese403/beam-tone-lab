@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#201b18">
+  <meta name="description" content="Dial in guitar sounds on your Blackstar BEAM Solo. Vintage tone recipes built for a traditional Telecaster.">
+  <title>BEAM TONE LAB · The Analog Tone Desk</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css?v=2">
+  <link rel="stylesheet" href="mobile.css?v=2">
+</head>
+<body>
+  <div class="shell">
+    <header class="masthead">
+      <a href="#" class="brand" aria-label="Beam Tone Lab home">
+        <span class="brand-mark"><span class="mark-bars">▥</span></span>
+        <span class="brand-text"><strong>BEAM<span class="brand-accent">/</span>TONE</strong><small>ANALOG TONE LABORATORY</small></span>
+      </a>
+      <div class="mast-actions">
+        <span class="device-tag"><span class="led small-led"></span><span>BLACKSTAR BEAM SOLO</span></span>
+        <button class="top-button" id="libraryBtn" type="button"><span aria-hidden="true">▤</span> MY PRESETS <span class="saved-count" id="savedCount">0</span></button>
+        <button class="top-button icon-button" id="settingsBtn" type="button" title="AI settings" aria-label="AI settings">⚙</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div><div class="eyebrow"><span class="eyebrow-rule"></span> THE ANALOG TONE DESK <span class="hero-rev">/ MODEL 001</span></div>
+          <h1>Find your <em>sound.</em></h1>
+          <p>Name a song, a guitarist or a band. We'll build a starting signal chain from your BEAM Solo equipment.</p>
+        </div>
+        <div class="vu-wrap" aria-hidden="true">
+          <div class="vu-case"><div class="vu-face"><span class="vu-title">SIGNAL LEVEL</span><div class="vu-scale"><span>-20</span><span>-10</span><span>-5</span><span>0</span><span>+3</span></div><div class="vu-lines"></div><div class="vu-needle" id="vuNeedle"></div><div class="vu-bottom"><span>◀ L</span><strong>VU</strong><span>R ▶</span></div></div></div>
+        </div>
+      </div>
+
+      <section class="search-deck" aria-label="Tone request">
+        <div class="deck-screws" aria-hidden="true"><span>+</span><span>+</span></div>
+        <div class="search-top"><span class="micro-label">01 / INPUT CHANNEL</span><span class="device-status"><span class="led"></span> <span id="modeStatus">LOCAL LIBRARY ACTIVE</span></span></div>
+        <form id="toneForm" class="search-row">
+          <label class="sr-only" for="toneQuery">Artist, band or song</label>
+          <span class="input-glyph" aria-hidden="true">♪</span>
+          <input id="toneQuery" type="search" placeholder="Artist, band, or song…" autocomplete="off" maxlength="160" required>
+          <button class="generate-btn" type="submit" id="generateBtn"><span class="generate-spark">✦</span> DIAL IT IN <span class="generate-arrow">↗</span></button>
+        </form>
+        <div class="chips"><span class="chips-label">QUICK TUNES</span>
+          <button type="button" class="chip" data-query="Link Wray">Link Wray</button>
+          <button type="button" class="chip" data-query="Poison Ivy">Poison Ivy</button>
+          <button type="button" class="chip" data-query="Duane Eddy">Duane Eddy</button>
+          <button type="button" class="chip" data-query="Johnny Thunders">Johnny Thunders</button>
+          <button type="button" class="chip" data-query="Misirlou">Misirlou</button>
+          <button type="button" class="chip" data-query="Rockabilly">Rockabilly</button>
+        </div>
+      </section>
+
+      <section class="result" id="resultSection" aria-label="Tone recipe" aria-live="polite">
+        <div class="result-heading"><div><span class="micro-label">02 / TONE GENERATOR</span><h2 id="recipeHeading">LINK WRAY <span class="subheading">/ RAW &amp; RUMBLING</span></h2></div><div class="result-actions"><button type="button" class="thin-button" id="copyBtn" title="Copy recipe">↗ COPY</button><button type="button" class="thin-button primary-small" id="saveBtn">☆ SAVE PRESET</button></div></div>
+        <div class="display-row">
+          <div class="digital-panel"><div class="digital-head"><span id="recipeSource">ORIGINAL WORKBOOK / ARTIST RECIPE</span><span>CH.01 // TELE</span></div>
+            <div class="digital-title" id="lcdTitle">LINK WRAY</div>
+            <p id="lcdDescription">Raw, edgy low-gain drive, heavy picking.</p>
+            <div class="digital-foot"><span><i class="mini-signal"></i> SIGNAL READY</span><span id="lcdFlag">STARTING POINT • NOT AN EXACT REPRODUCTION</span></div>
+          </div>
+          <div class="guitar-panel"><div class="micro-label">YOUR INSTRUMENT</div><div class="guitar-name">TELECASTER <small>SC / SC</small></div>
+            <div class="pickup-switch" role="group" aria-label="Pickup selector">
+              <button data-pickup="Neck" type="button">NECK</button><button data-pickup="Middle" type="button">BOTH</button><button data-pickup="Bridge" type="button">BRIDGE</button>
+            </div><p class="pickup-note" id="pickupNote">Traditional single-coil pickups · 3-way switch</p>
+          </div>
+        </div>
+
+        <div class="chain-wrap"><div class="strip-header"><span class="micro-label">SIGNAL ROUTING</span><span class="mini-hint">TAP A MODULE TO CHANGE GEAR</span></div>
+          <div class="chain" id="signalChain"></div></div>
+
+        <div class="console"><div class="console-header"><div><span class="micro-label">03 / PARAMETRIC CONTROL</span><h3>MIXING DESK <span>STARTING SETTINGS</span></h3></div><div class="console-badge">4 FADERS + ISF • 0—10</div></div>
+          <div class="fader-rack" id="faderRack"></div>
+          <div class="isf-zone"><div class="isf-text"><span class="micro-label">ISF / INFINITE SHAPE FEATURE</span><p>Voicing control</p></div><input type="range" id="isfSlider" min="0" max="100" step="5" value="55" aria-label="ISF percentage"><output id="isfValue">55%</output></div>
+        </div>
+        <div class="notes-panel"><div class="notes-icon" aria-hidden="true">✳</div><div><div class="micro-label">ENGINEER'S NOTES</div><p id="engineerNotes"></p><p class="note-muted" id="guideNotes"></p></div></div>
+      </section>
+
+      <section class="lower-sections">
+        <div class="lower-card"><span class="micro-label">04 / REFERENCE LIBRARY</span><div class="lower-card-title"><h3>Built from real gear.</h3><span class="big-count" id="modelCount">67</span></div><p>Every amp, cabinet, mic and effect comes from your original BEAM Solo workbook. No imaginary pedals.</p><button id="gearBtn" class="text-button" type="button">EXPLORE GEAR INVENTORY ↗</button></div>
+        <div class="lower-card"><span class="micro-label">05 / GENERATOR MODE</span><div class="lower-card-title"><h3 id="aiHeadline">Local by default.</h3><span class="mode-icon">✳</span></div><p id="aiSummary">The starter version recognizes workbook artists and selected songs/styles. For anything else, connect the optional secure AI service.</p><button id="connectBtn" class="text-button" type="button">SET UP AI RECIPE GENERATOR ↗</button></div>
+      </section>
+    </main>
+    <footer><span>BEAM / TONE LAB <span class="footer-slash">///</span> EXPERIMENT • LISTEN • ADJUST</span><span>DESIGNED FOR TELECASTER + BLACKSTAR BEAM SOLO</span></footer>
+  </div>
+
+  <dialog id="gearDialog" class="app-dialog"><div class="dialog-header"><div><span class="micro-label">INSTRUMENT CABINET</span><h2>BEAM SOLO EQUIPMENT</h2></div><button data-close="gearDialog" class="close-btn" aria-label="Close">✕</button></div><div class="dialog-body"><p class="dialog-lead">Equipment catalogue imported from your original spreadsheet. Choose a category to explore.</p><div class="filter-row" id="gearFilters"></div><div id="gearList" class="gear-list"></div></div></dialog>
+  <dialog id="libraryDialog" class="app-dialog"><div class="dialog-header"><div><span class="micro-label">ARCHIVE / LOCAL STORAGE</span><h2>MY SAVED PRESETS</h2></div><button data-close="libraryDialog" class="close-btn" aria-label="Close">✕</button></div><div class="dialog-body"><p class="dialog-lead">Saved only in this browser on this device. Export a copy if you want to keep them across devices.</p><div class="saved-toolbar"><button class="thin-button" id="exportAllBtn" type="button">↓ EXPORT JSON</button><button class="thin-button" id="importBtn" type="button">↑ IMPORT JSON</button><input type="file" accept=".json,application/json" id="importFile" hidden></div><div id="savedList" class="saved-list"></div></div></dialog>
+  <dialog id="settingsDialog" class="app-dialog"><div class="dialog-header"><div><span class="micro-label">SYSTEM / OPTIONAL UPGRADE</span><h2>AI GENERATOR SETTINGS</h2></div><button data-close="settingsDialog" class="close-btn" aria-label="Close">✕</button></div><div class="dialog-body"><p class="dialog-lead">The local library works without an account or API key. To create thoughtful recipes for unfamiliar songs and artists, add your own secure Worker endpoint. Never put an OpenAI API key in the website code.</p><form id="settingsForm" class="settings-form"><label for="workerUrl">WORKER URL</label><input id="workerUrl" type="url" placeholder="https://your-worker.your-name.workers.dev" autocomplete="url"><label for="workerPassword">ACCESS PASSPHRASE</label><input id="workerPassword" type="password" placeholder="Required by your Worker (not saved)" autocomplete="off"><p class="form-note">Your Worker URL is stored in this browser. The passphrase remains in memory only until you close or refresh this page.</p><button type="submit" class="generate-btn settings-submit">SAVE CONNECTION</button><button type="button" id="disconnectBtn" class="text-button">DISCONNECT / USE LOCAL ONLY</button></form></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="data.js"></script>
+  <script src="app.js?v=2"></script>
+</body>
+</html>

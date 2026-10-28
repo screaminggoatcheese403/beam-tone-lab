@@ -1,0 +1,12 @@
+name = "beam-tone-lab-generator"
+main = "index.js"
+compatibility_date = "2026-09-01"
+
+# No secrets in this file. Configure with:
+# npx wrangler secret put OPENAI_API_KEY
+# npx wrangler secret put APP_ACCESS_KEY
+# OpenAI API charges are separate from ChatGPT subscriptions.
+# Replace example origin with your own GitHub Pages URL before publishing.
+[vars]
+ALLOWED_ORIGIN = "https://YOUR-USERNAME.github.io"
+OPENAI_MODEL = "gpt-4.1-mini"

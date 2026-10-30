@@ -1,0 +1,9 @@
+/* BEAM Tone Lab v3 • accessible mobile AI controls */
+.ai-buttons{display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin-top:12px}
+.fresh-ai-btn{background:#282b27;color:#f3dfba;border:1px solid #8b623f;border-radius:2px;padding:13px 16px;min-height:44px;font-size:12px;font-weight:850;letter-spacing:.5px}
+.fresh-ai-btn:hover{background:#42443b}
+.settings-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:8px}
+.settings-actions .generate-btn{width:auto;margin:0;min-height:48px}
+.settings-actions .thin-button{min-height:48px;padding:12px 16px;background:#e9dfd0;color:#65442e;border:1px solid #a99b87;font-weight:800}
+.connection-message{font-size:13px;line-height:1.45;color:#3d493d;min-height:20px;margin:8px 0 4px}
+@media(max-width:680px){.ai-buttons{display:flex;flex-direction:column;align-items:stretch;gap:12px}.ai-buttons button{width:100%;min-height:48px;font-size:13px;text-align:center}.settings-actions{display:grid;grid-template-columns:1fr;gap:12px}.settings-actions button{width:100%}.connection-message{font-size:14px}}

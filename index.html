@@ -4,12 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#201b18">
-  <meta name="description" content="Dial in guitar sounds on your Blackstar BEAM Solo. Vintage tone recipes built for a traditional Telecaster.">
+  <meta name="description" content="Dial in guitar sounds on your Blackstar BEAM Solo. 134 Songsterr tabs, your instruments, and starting tone recipes for Blackstar BEAM Solo.">
   <title>BEAM TONE LAB · The Analog Tone Desk</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css?v=2">
-  <link rel="stylesheet" href="mobile.css?v=2">
+  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="mobile.css?v=4">
+  <link rel="stylesheet" href="v3.css?v=4">
+  <link rel="stylesheet" href="v4.css?v=4">
 </head>
 <body>
   <div class="shell">
@@ -21,15 +23,15 @@
       <div class="mast-actions">
         <span class="device-tag"><span class="led small-led"></span><span>BLACKSTAR BEAM SOLO</span></span>
         <button class="top-button" id="libraryBtn" type="button"><span aria-hidden="true">▤</span> MY PRESETS <span class="saved-count" id="savedCount">0</span></button>
-        <button class="top-button icon-button" id="settingsBtn" type="button" title="AI settings" aria-label="AI settings">⚙</button>
+        <button class="top-button icon-button" id="aboutBtn" type="button" title="About this version" aria-label="About this version">⚙</button>
       </div>
     </header>
 
     <main>
       <div class="hero">
-        <div><div class="eyebrow"><span class="eyebrow-rule"></span> THE ANALOG TONE DESK <span class="hero-rev">/ MODEL 001</span></div>
+        <div><div class="eyebrow"><span class="eyebrow-rule"></span> THE ANALOG TONE DESK <span class="hero-rev">/ V4 · 134 TABS</span></div>
           <h1>Find your <em>sound.</em></h1>
-          <p>Name a song, a guitarist or a band. We'll build a starting signal chain from your BEAM Solo equipment.</p>
+          <p>Your songs. Your guitars. Your BEAM Solo. Browse your Songsterr library and dial in a starting sound.</p>
         </div>
         <div class="vu-wrap" aria-hidden="true">
           <div class="vu-case"><div class="vu-face"><span class="vu-title">SIGNAL LEVEL</span><div class="vu-scale"><span>-20</span><span>-10</span><span>-5</span><span>0</span><span>+3</span></div><div class="vu-lines"></div><div class="vu-needle" id="vuNeedle"></div><div class="vu-bottom"><span>◀ L</span><strong>VU</strong><span>R ▶</span></div></div></div>
@@ -38,12 +40,12 @@
 
       <section class="search-deck" aria-label="Tone request">
         <div class="deck-screws" aria-hidden="true"><span>+</span><span>+</span></div>
-        <div class="search-top"><span class="micro-label">01 / INPUT CHANNEL</span><span class="device-status"><span class="led"></span> <span id="modeStatus">LOCAL LIBRARY ACTIVE</span></span></div>
+        <div class="search-top"><span class="micro-label">01 / INPUT CHANNEL</span><span class="device-status"><span class="led"></span> <span id="modeStatus">LOCAL RECIPE LIBRARY</span></span></div>
         <form id="toneForm" class="search-row">
-          <label class="sr-only" for="toneQuery">Artist, band or song</label>
+          <label class="sr-only" for="toneQuery">Band, guitarist, genre, or song</label>
           <span class="input-glyph" aria-hidden="true">♪</span>
-          <input id="toneQuery" type="search" placeholder="Artist, band, or song…" autocomplete="off" maxlength="160" required>
-          <button class="generate-btn" type="submit" id="generateBtn"><span class="generate-spark">✦</span> DIAL IT IN <span class="generate-arrow">↗</span></button>
+          <input id="toneQuery" type="search" placeholder="Band, guitarist, genre, or song…" autocomplete="off" maxlength="160" required>
+          <button class="generate-btn" type="submit" id="generateBtn"><span class="generate-spark">✦</span> SEARCH TONES <span class="generate-arrow">↗</span></button>
         </form>
         <div class="chips"><span class="chips-label">QUICK TUNES</span>
           <button type="button" class="chip" data-query="Link Wray">Link Wray</button>
@@ -55,25 +57,48 @@
         </div>
       </section>
 
+      <section class="song-library" id="songLibrary" aria-label="Your Songsterr catalogue">
+        <div class="catalogue-head">
+          <div><span class="micro-label">02 / YOUR SONGSTERR COLLECTION</span><h2>THE RECORD CRATE <span id="catalogueTotal">134</span></h2>
+            <p>Find songs by title, band, guitarist, genre or playlist. Select one to load a BEAM Solo starting recipe.</p></div>
+          <div class="catalogue-tally"><strong id="visibleCount">134</strong><span>IN THE CRATE</span></div>
+        </div>
+        <div class="catalogue-controls"><label class="sr-only" for="librarySearch">Search songs and artists</label><input type="search" id="librarySearch" placeholder="Search songs, bands, players, genres…" autocomplete="off" aria-label="Filter your Songsterr songs"><label class="sr-only" for="libraryFilter">Filter songs</label><select id="libraryFilter" aria-label="Filter songs"><option value="all">All 134 tabs</option><option value="favorites">Favorites + playlists</option><option value="uploaded">Uploaded by me</option><option value="uploadonly">36 upload-only additions</option></select></div>
+        <div class="catalogue-secondary-controls">
+          <label>Band / artist<select id="artistFilter" aria-label="Choose band or artist"><option value="">All bands and artists</option></select></label>
+          <label>Guitar player<select id="guitaristFilter" aria-label="Choose guitarist"><option value="">All guitarists</option></select></label>
+          <label>Genre<select id="genreFilter" aria-label="Choose genre"><option value="">All genres</option></select></label>
+          <label>Songsterr playlist<select id="playlistFilter" aria-label="Choose Songsterr playlist"><option value="">All playlists</option></select></label>
+        </div>
+        <div class="genre-chips" id="genreChips" role="group" aria-label="Quick genre filters"></div>
+        <div class="library-hint"><span class="led small-led"></span><span>All 134 tabs included — 98 saved / 36 additional uploads. Uploads overlapping with favorites are shown once.</span></div>
+        <div class="profile-shortcut" id="profileShortcut" hidden><span id="profileShortcutText">Artist tone ready</span><button id="jumpProfileBtn" type="button">OPEN ARTIST / GENRE TONE ↓</button></div>
+        <div class="song-list" id="songList" aria-live="polite"></div>
+        <div class="library-bottom"><span id="songListSummary"></span><button id="showMoreSongs" class="thin-button" type="button">SHOW MORE ↓</button></div>
+      </section>
+
       <section class="result" id="resultSection" aria-label="Tone recipe" aria-live="polite">
-        <div class="result-heading"><div><span class="micro-label">02 / TONE GENERATOR</span><h2 id="recipeHeading">LINK WRAY <span class="subheading">/ RAW &amp; RUMBLING</span></h2></div><div class="result-actions"><button type="button" class="thin-button" id="copyBtn" title="Copy recipe">↗ COPY</button><button type="button" class="thin-button primary-small" id="saveBtn">☆ SAVE PRESET</button></div></div>
+        <div class="result-heading"><div><span class="micro-label">03 / TONE RECIPE</span><h2 id="recipeHeading">LINK WRAY <span class="subheading">/ RAW &amp; RUMBLING</span></h2></div><div class="result-actions"><button type="button" class="thin-button" id="copyBtn" title="Copy recipe">↗ COPY</button><button type="button" class="thin-button primary-small" id="saveBtn">☆ SAVE PRESET</button></div></div>
         <div class="display-row">
-          <div class="digital-panel"><div class="digital-head"><span id="recipeSource">ORIGINAL WORKBOOK / ARTIST RECIPE</span><span>CH.01 // TELE</span></div>
+          <div class="digital-panel"><div class="digital-head"><span id="recipeSource">ORIGINAL WORKBOOK / ARTIST RECIPE</span><span>CH.01 // YOUR INSTRUMENT</span></div>
             <div class="digital-title" id="lcdTitle">LINK WRAY</div>
             <p id="lcdDescription">Raw, edgy low-gain drive, heavy picking.</p>
+            <div class="digital-links"><a id="songsterrLink" href="#" target="_blank" rel="noopener noreferrer" hidden>↗ OPEN ORIGINAL SONGSTERR TAB</a><span id="songSourceLabel"></span></div>
             <div class="digital-foot"><span><i class="mini-signal"></i> SIGNAL READY</span><span id="lcdFlag">STARTING POINT • NOT AN EXACT REPRODUCTION</span></div>
           </div>
-          <div class="guitar-panel"><div class="micro-label">YOUR INSTRUMENT</div><div class="guitar-name">TELECASTER <small>SC / SC</small></div>
-            <div class="pickup-switch" role="group" aria-label="Pickup selector">
+          <div class="guitar-panel"><div class="micro-label">YOUR INSTRUMENT</div>
+            <div class="instrument-top"><img id="instrumentIcon" src="assets/surfmaster.svg" width="65" height="86" alt="Selected guitar silhouette"><div class="instrument-top-text"><label class="sr-only" for="instrumentSelect">Select guitar or bass</label><select id="instrumentSelect" aria-label="Choose your guitar or bass"></select><div id="stringLabel" class="instrument-strings">Current strings</div></div></div>
+            <div class="pickup-switch" id="pickupSwitch" role="group" aria-label="Pickup selector">
               <button data-pickup="Neck" type="button">NECK</button><button data-pickup="Middle" type="button">BOTH</button><button data-pickup="Bridge" type="button">BRIDGE</button>
-            </div><p class="pickup-note" id="pickupNote">Traditional single-coil pickups · 3-way switch</p>
+            </div><p class="pickup-note" id="pickupNote">Traditional single-coils · 3-way switch</p>
+            <p class="instrument-warning" id="instrumentWarning"></p>
           </div>
         </div>
 
         <div class="chain-wrap"><div class="strip-header"><span class="micro-label">SIGNAL ROUTING</span><span class="mini-hint">TAP A MODULE TO CHANGE GEAR</span></div>
           <div class="chain" id="signalChain"></div></div>
 
-        <div class="console"><div class="console-header"><div><span class="micro-label">03 / PARAMETRIC CONTROL</span><h3>MIXING DESK <span>STARTING SETTINGS</span></h3></div><div class="console-badge">4 FADERS + ISF • 0—10</div></div>
+        <div class="console"><div class="console-header"><div><span class="micro-label">04 / PARAMETRIC CONTROL</span><h3>MIXING DESK <span>STARTING SETTINGS</span></h3></div><div class="console-badge">4 FADERS + ISF • 0—10</div></div>
           <div class="fader-rack" id="faderRack"></div>
           <div class="isf-zone"><div class="isf-text"><span class="micro-label">ISF / INFINITE SHAPE FEATURE</span><p>Voicing control</p></div><input type="range" id="isfSlider" min="0" max="100" step="5" value="55" aria-label="ISF percentage"><output id="isfValue">55%</output></div>
         </div>
@@ -81,18 +106,20 @@
       </section>
 
       <section class="lower-sections">
-        <div class="lower-card"><span class="micro-label">04 / REFERENCE LIBRARY</span><div class="lower-card-title"><h3>Built from real gear.</h3><span class="big-count" id="modelCount">67</span></div><p>Every amp, cabinet, mic and effect comes from your original BEAM Solo workbook. No imaginary pedals.</p><button id="gearBtn" class="text-button" type="button">EXPLORE GEAR INVENTORY ↗</button></div>
-        <div class="lower-card"><span class="micro-label">05 / GENERATOR MODE</span><div class="lower-card-title"><h3 id="aiHeadline">Local by default.</h3><span class="mode-icon">✳</span></div><p id="aiSummary">The starter version recognizes workbook artists and selected songs/styles. For anything else, connect the optional secure AI service.</p><button id="connectBtn" class="text-button" type="button">SET UP AI RECIPE GENERATOR ↗</button></div>
+        <div class="lower-card"><span class="micro-label">05 / REFERENCE LIBRARY</span><div class="lower-card-title"><h3>Built from real gear.</h3><span class="big-count" id="modelCount">67</span></div><p>Every amp, cabinet, mic and effect comes from your original BEAM Solo workbook. No imaginary pedals.</p><button id="gearBtn" class="text-button" type="button">EXPLORE GEAR INVENTORY ↗</button></div>
+        <div class="lower-card"><span class="micro-label">06 / THE COLLECTION</span><div class="lower-card-title"><h3>All 134 tabs included.</h3><span class="mode-icon">♫</span></div><p>Your 98 saved entries and 36 additional uploads live right here — with real tab links, five instrument choices, and transparent starting-point recipes. No subscription or AI API is required.</p><button type="button" id="jumpLibraryBtn" class="text-button">BROWSE MY SONGS ↗</button></div>
       </section>
     </main>
-    <footer><span>BEAM / TONE LAB <span class="footer-slash">///</span> EXPERIMENT • LISTEN • ADJUST</span><span>DESIGNED FOR TELECASTER + BLACKSTAR BEAM SOLO</span></footer>
+    <footer><span>BEAM / TONE LAB <span class="footer-slash">///</span> EXPERIMENT • LISTEN • ADJUST</span><span>FIVE INSTRUMENTS · BLACKSTAR BEAM SOLO · NO AI FEES</span></footer>
   </div>
 
   <dialog id="gearDialog" class="app-dialog"><div class="dialog-header"><div><span class="micro-label">INSTRUMENT CABINET</span><h2>BEAM SOLO EQUIPMENT</h2></div><button data-close="gearDialog" class="close-btn" aria-label="Close">✕</button></div><div class="dialog-body"><p class="dialog-lead">Equipment catalogue imported from your original spreadsheet. Choose a category to explore.</p><div class="filter-row" id="gearFilters"></div><div id="gearList" class="gear-list"></div></div></dialog>
   <dialog id="libraryDialog" class="app-dialog"><div class="dialog-header"><div><span class="micro-label">ARCHIVE / LOCAL STORAGE</span><h2>MY SAVED PRESETS</h2></div><button data-close="libraryDialog" class="close-btn" aria-label="Close">✕</button></div><div class="dialog-body"><p class="dialog-lead">Saved only in this browser on this device. Export a copy if you want to keep them across devices.</p><div class="saved-toolbar"><button class="thin-button" id="exportAllBtn" type="button">↓ EXPORT JSON</button><button class="thin-button" id="importBtn" type="button">↑ IMPORT JSON</button><input type="file" accept=".json,application/json" id="importFile" hidden></div><div id="savedList" class="saved-list"></div></div></dialog>
-  <dialog id="settingsDialog" class="app-dialog"><div class="dialog-header"><div><span class="micro-label">SYSTEM / OPTIONAL UPGRADE</span><h2>AI GENERATOR SETTINGS</h2></div><button data-close="settingsDialog" class="close-btn" aria-label="Close">✕</button></div><div class="dialog-body"><p class="dialog-lead">The local library works without an account or API key. To create thoughtful recipes for unfamiliar songs and artists, add your own secure Worker endpoint. Never put an OpenAI API key in the website code.</p><form id="settingsForm" class="settings-form"><label for="workerUrl">WORKER URL</label><input id="workerUrl" type="url" placeholder="https://your-worker.your-name.workers.dev" autocomplete="url"><label for="workerPassword">ACCESS PASSPHRASE</label><input id="workerPassword" type="password" placeholder="Required by your Worker (not saved)" autocomplete="off"><p class="form-note">Your Worker URL is stored in this browser. The passphrase remains in memory only until you close or refresh this page.</p><button type="submit" class="generate-btn settings-submit">SAVE CONNECTION</button><button type="button" id="disconnectBtn" class="text-button">DISCONNECT / USE LOCAL ONLY</button></form></div></dialog>
+  <dialog id="aboutDialog" class="app-dialog"><div class="dialog-header"><div><span class="micro-label">SYSTEM / VERSION FOUR</span><h2>ABOUT TONE LAB</h2></div><button data-close="aboutDialog" class="close-btn" aria-label="Close">✕</button></div><div class="dialog-body"><p>All 134 unique Songsterr tab entries are included: 98 from Favorites or playlists plus 36 additional tabs you uploaded. Altogether, 49 of the entries are marked as uploaded by you.</p><p>Each entry loads a <strong>starting recipe</strong> based on one of the original workbook artist references or an approximate genre template. These are <strong>not verified reproductions</strong> of studio settings; especially your personal tabs and tracks without genre information need review by ear.</p><p>Model names come from your BEAM Solo workbook. Your five instruments and pickup configurations are included. Changing a control here does not change the Blackstar app.</p><p>Presets save in this browser only. Use Export and Import to transfer them between devices. This version does not call your Cloudflare Worker or any paid AI service.</p></div></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="data.js"></script>
-  <script src="app.js?v=2"></script>
+  <script src="songs.js"></script>
+  <script src="instruments.js"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
